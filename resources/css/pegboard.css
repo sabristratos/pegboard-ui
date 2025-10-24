@@ -1,0 +1,455 @@
+@theme {
+  --neutral-50: var(--color-stone-50);
+  --neutral-100: var(--color-stone-100);
+  --neutral-200: var(--color-stone-200);
+  --neutral-300: var(--color-stone-300);
+  --neutral-400: var(--color-stone-400);
+  --neutral-500: var(--color-stone-500);
+  --neutral-600: var(--color-stone-600);
+  --neutral-700: var(--color-stone-700);
+  --neutral-800: var(--color-stone-800);
+  --neutral-900: var(--color-stone-900);
+  --neutral-950: var(--color-stone-950);
+
+  --brand-50: var(--color-pink-50);
+  --brand-100: var(--color-pink-100);
+  --brand-200: var(--color-pink-200);
+  --brand-300: var(--color-pink-300);
+  --brand-400: var(--color-pink-400);
+  --brand-500: var(--color-pink-500);
+  --brand-600: var(--color-pink-600);
+  --brand-700: var(--color-pink-700);
+  --brand-800: var(--color-pink-800);
+  --brand-900: var(--color-pink-900);
+  --brand-950: var(--color-pink-950);
+
+  --accent-50: var(--color-amber-50);
+  --accent-100: var(--color-amber-100);
+  --accent-200: var(--color-amber-200);
+  --accent-300: var(--color-amber-300);
+  --accent-400: var(--color-amber-400);
+  --accent-500: var(--color-amber-500);
+  --accent-600: var(--color-amber-600);
+  --accent-700: var(--color-amber-700);
+  --accent-800: var(--color-amber-800);
+  --accent-900: var(--color-amber-900);
+  --accent-950: var(--color-amber-950);
+
+  --success-50: var(--color-green-50);
+  --success-500: var(--color-green-500);
+  --success-600: var(--color-green-600);
+  --success-950: var(--color-green-950);
+
+  --warning-50: var(--color-yellow-50);
+  --warning-500: var(--color-yellow-500);
+  --warning-700: var(--color-yellow-700);
+  --warning-900: var(--color-yellow-900);
+
+  --error-50: var(--color-red-50);
+  --error-500: var(--color-red-500);
+  --error-600: var(--color-red-600);
+  --error-950: var(--color-red-950);
+
+  --info-50: var(--color-sky-50);
+  --info-500: var(--color-sky-500);
+  --info-600: var(--color-sky-600);
+  --info-950: var(--color-sky-950);
+
+  --chart-1: var(--color-blue-500);
+  --chart-2: var(--color-amber-500);
+  --chart-3: var(--color-purple-500);
+  --chart-4: var(--color-emerald-500);
+  --chart-5: var(--color-rose-500);
+
+  --surface-bright: var(--color-white);
+  --surface-dark: var(--neutral-900);
+
+  --sidebar-light: var(--neutral-50);
+  --sidebar-dark: var(--neutral-900);
+
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* Carousel */
+  --carousel-peek-amount: 5rem;
+  --carousel-gap: 1rem;
+  --carousel-control-size: 2.5rem;
+  --carousel-indicator-size: 0.5rem;
+
+  /* Button Depth Shadows */
+  --inset-shadow-button: 0 1px 2px 0 rgb(0 0 0 / 0.1) inset;
+  --inset-shadow-button-active: 0 2px 4px 0 rgb(0 0 0 / 0.15) inset;
+
+  /* Card & Component Shadows */
+  --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-elevated: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+
+  /* Fluid Typography Scale */
+  --text-xs: var(--step--2);
+  --text-xs--line-height: 1.4;
+  --text-sm: var(--step--1);
+  --text-sm--line-height: 1.5;
+  --text-base: var(--step-0);
+  --text-base--line-height: 1.5;
+  --text-lg: var(--step-1);
+  --text-lg--line-height: 1.5;
+  --text-xl: var(--step-2);
+  --text-xl--line-height: 1.4;
+  --text-2xl: var(--step-3);
+  --text-2xl--line-height: 1.3;
+  --text-3xl: var(--step-4);
+  --text-3xl--line-height: 1.2;
+  --text-4xl: var(--step-5);
+  --text-4xl--line-height: 1.1;
+
+}
+
+:root {
+    color-scheme: light dark;
+
+    interpolate-size: allow-keywords;
+
+    /* Fluid Type Scale - Scales smoothly from mobile (~320px) to desktop (~1280px) */
+    --step--2: clamp(0.6944rem, 0.6856rem + 0.0444vw, 0.72rem);
+    --step--1: clamp(0.8333rem, 0.8101rem + 0.1159vw, 0.9rem);
+    --step-0: clamp(0.9rem, 0.9565rem + 0.2174vw, 0.9rem);
+    --step-1: clamp(1.2rem, 1.1283rem + 0.3587vw, 1.4063rem);
+    --step-2: clamp(1.44rem, 1.3295rem + 0.5527vw, 1.7578rem);
+    --step-3: clamp(1.728rem, 1.5648rem + 0.8161vw, 2.1973rem);
+    --step-4: clamp(2.0736rem, 1.8395rem + 1.1704vw, 2.7466rem);
+    --step-5: clamp(2.4883rem, 2.1597rem + 1.6433vw, 3.4332rem);
+}
+
+@theme inline {
+
+  --color-background: light-dark(var(--neutral-50), var(--neutral-950));
+  --color-foreground: light-dark(var(--neutral-900), var(--neutral-50));
+  --color-card: light-dark(var(--surface-bright), var(--surface-dark));
+  --color-card-foreground: light-dark(var(--neutral-900), var(--neutral-50));
+  --color-popover: light-dark(var(--surface-bright), var(--neutral-800));
+  --color-popover-foreground: light-dark(var(--neutral-900), var(--neutral-50));
+  --color-popover-hover: light-dark(var(--neutral-100), var(--neutral-700));
+  --color-popover-hover-foreground: light-dark(var(--neutral-900), var(--neutral-50));
+
+  --color-primary: light-dark(var(--brand-600), var(--brand-600));
+  --color-primary-foreground: white;
+  --color-secondary: light-dark(var(--accent-100), var(--accent-900));
+  --color-secondary-foreground: light-dark(var(--accent-900), white);
+
+  --color-muted: light-dark(var(--neutral-200), var(--neutral-600));
+  --color-muted-foreground: light-dark(var(--neutral-600), var(--neutral-300));
+
+  --color-accent: light-dark(var(--accent-100), var(--accent-800));
+  --color-accent-foreground: light-dark(var(--accent-900), var(--accent-100));
+
+  --color-destructive: light-dark(var(--error-600), var(--error-600));
+  --color-destructive-foreground: white;
+
+  --color-success: light-dark(var(--success-600), var(--success-600));
+  --color-success-foreground: white;
+  --color-success-subtle: light-dark(var(--success-50), var(--success-950));
+
+  --color-warning: light-dark(var(--warning-700), var(--warning-900));
+  --color-warning-foreground: white;
+  --color-warning-subtle: light-dark(var(--warning-50), var(--warning-900));
+
+  --color-danger-subtle: light-dark(var(--error-50), var(--error-950));
+
+  --color-info: light-dark(var(--info-600), var(--info-500));
+  --color-info-foreground: light-dark(var(--surface-bright), var(--info-950));
+  --color-info-subtle: light-dark(var(--info-50), var(--info-950));
+
+  --color-border: light-dark(var(--neutral-200), var(--neutral-700));
+  --color-input: light-dark(var(--neutral-100), var(--neutral-800));
+  --color-ring: light-dark(var(--brand-600), var(--brand-400));
+
+  --color-chart-1: light-dark(var(--chart-1), var(--brand-400));
+  --color-chart-2: light-dark(var(--chart-2), var(--accent-400));
+  --color-chart-3: light-dark(var(--chart-3), var(--color-purple-400));
+  --color-chart-4: light-dark(var(--chart-4), var(--color-emerald-400));
+  --color-chart-5: light-dark(var(--chart-5), var(--color-rose-400));
+
+  --color-sidebar: light-dark(var(--sidebar-light), var(--sidebar-dark));
+  --color-sidebar-foreground: light-dark(var(--neutral-700), var(--neutral-200));
+  --color-sidebar-primary: light-dark(var(--neutral-800), var(--brand-500));
+  --color-sidebar-primary-foreground: light-dark(var(--surface-bright), var(--surface-bright));
+  --color-sidebar-accent: light-dark(var(--neutral-100), var(--neutral-800));
+  --color-sidebar-accent-foreground: light-dark(var(--neutral-800), var(--neutral-200));
+  --color-sidebar-border: light-dark(var(--neutral-200), var(--neutral-800));
+  --color-sidebar-ring: light-dark(var(--neutral-300), var(--neutral-700));
+
+  --color-scrollbar-track: light-dark(transparent, transparent);
+  --color-scrollbar-thumb: light-dark(var(--neutral-300), var(--neutral-700));
+  --color-scrollbar-thumb-hover: light-dark(var(--neutral-400), var(--neutral-600));
+
+  --color-table-header: light-dark(var(--neutral-100), var(--neutral-700));
+}
+
+/* Modern Scrollbar Utilities */
+.scrollbar-thin {
+  /* Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar-thumb) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--color-scrollbar-thumb) 40%, transparent);
+  border-radius: 2px;
+  transition: background var(--duration-fast);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: var(--color-scrollbar-thumb);
+}
+
+.scrollbar-none {
+  /* Firefox */
+  scrollbar-width: none;
+  /* Webkit/Blink */
+  -ms-overflow-style: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Alpine.js x-cloak - Hide elements until Alpine is loaded */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Tiptap Editor Styles */
+.tiptap-editor {
+  color: var(--color-foreground);
+  cursor: text;
+}
+
+.tiptap-editor:focus {
+  outline: none;
+}
+
+/* Tiptap Content Styles - the actual contenteditable div created by Tiptap */
+.tiptap {
+  outline: none !important;
+  cursor: text !important;
+  min-height: inherit;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  pointer-events: auto !important;
+}
+
+/* Ensure ProseMirror contentEditable is editable */
+.tiptap[contenteditable="true"] {
+  cursor: text !important;
+  caret-color: var(--color-foreground);
+}
+
+/* Focus state for better UX */
+.tiptap:focus {
+  outline: none !important;
+}
+
+/* Ensure ProseMirror is always editable */
+.ProseMirror {
+  outline: none !important;
+  cursor: text !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+}
+
+.ProseMirror[contenteditable="true"] {
+  cursor: text !important;
+  caret-color: var(--color-foreground);
+}
+
+/* Typography for editor content */
+.tiptap p {
+  margin: 1em 0;
+  line-height: 1.6;
+}
+
+.tiptap p:first-child {
+  margin-top: 0;
+}
+
+.tiptap p:last-child {
+  margin-bottom: 0;
+}
+
+.tiptap h1,
+.tiptap h2,
+.tiptap h3 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.5em 0 0.5em;
+}
+
+.tiptap h1:first-child,
+.tiptap h2:first-child,
+.tiptap h3:first-child {
+  margin-top: 0;
+}
+
+.tiptap h1 {
+  font-size: 1.875rem;
+}
+
+.tiptap h2 {
+  font-size: 1.5rem;
+}
+
+.tiptap h3 {
+  font-size: 1.25rem;
+}
+
+/* Lists */
+.tiptap ul,
+.tiptap ol {
+  padding-left: 1.5rem;
+  margin: 1em 0;
+}
+
+.tiptap ul {
+  list-style-type: disc;
+}
+
+.tiptap ol {
+  list-style-type: decimal;
+}
+
+.tiptap li {
+  margin: 0.25em 0;
+}
+
+.tiptap li p {
+  margin: 0;
+}
+
+/* Code */
+.tiptap code {
+  background-color: var(--color-muted);
+  color: var(--color-foreground);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Links */
+.tiptap a {
+  color: var(--color-primary);
+  text-decoration: underline;
+  cursor: pointer;
+  transition: color var(--duration-fast);
+}
+
+.tiptap a:hover {
+  color: color-mix(in srgb, var(--color-primary) 80%, var(--color-foreground));
+}
+
+/* Placeholder */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--color-muted-foreground);
+  pointer-events: none;
+  height: 0;
+}
+
+/* Strong/Bold */
+.tiptap strong {
+  font-weight: 600;
+}
+
+/* Emphasis/Italic */
+.tiptap em {
+  font-style: italic;
+}
+
+/* Images */
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+  border-radius: 0.375rem;
+  cursor: pointer;
+}
+
+/* Image Resizer Container */
+.tiptap .image-resizer {
+  display: inline-block;
+  position: relative;
+  margin: 1em 0;
+}
+
+/* Image inside resizer */
+.tiptap .image-resizer img {
+  display: block;
+  margin: 0;
+  border-radius: 0.375rem;
+}
+
+/* Selected image outline */
+.tiptap .image-resizer.ProseMirror-selectednode img {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Resize Trigger/Handle */
+.tiptap .resize-trigger {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 16px;
+  height: 16px;
+  background: var(--color-primary);
+  border: 2px solid var(--color-background);
+  border-radius: 2px;
+  cursor: nwse-resize;
+  opacity: 0;
+  transition: opacity var(--duration-fast);
+  z-index: 10;
+}
+
+.tiptap .image-resizer:hover .resize-trigger,
+.tiptap .image-resizer.ProseMirror-selectednode .resize-trigger {
+  opacity: 1;
+}
+
+/* Resize cursor during drag */
+.tiptap .image-resizer.resizing {
+  cursor: nwse-resize;
+}
+
+.tiptap .image-resizer.resizing img {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ============================================
+   Modal/Dialog Behavior
+   ============================================ */
+
+/* Prevent body scroll when any modal is open */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+

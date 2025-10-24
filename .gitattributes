@@ -1,0 +1,17 @@
+# Exclude development and documentation files from distribution
+/tests export-ignore
+/.github export-ignore
+/docs export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
+.editorconfig export-ignore
+phpunit.xml export-ignore
+phpunit.xml.dist export-ignore
+package.json export-ignore
+package-lock.json export-ignore
+tsconfig.json export-ignore
+tsconfig.node.json export-ignore
+tsconfig.tsbuildinfo export-ignore
+vite.config.ts export-ignore
+README.md export-ignore
+CHANGELOG.md export-ignore

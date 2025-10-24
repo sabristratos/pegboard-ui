@@ -1,0 +1,68 @@
+name: Tests
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.2, 8.3, 8.4]
+        laravel: [11.*, 12.*]
+
+    name: PHP ${{ matrix.php }} - Laravel ${{ matrix.laravel }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite
+          coverage: none
+
+      - name: Install Composer dependencies
+        run: |
+          composer require "illuminate/support:${{ matrix.laravel }}" "illuminate/view:${{ matrix.laravel }}" --no-interaction --no-update
+          composer install --prefer-dist --no-interaction
+
+      - name: Validate composer.json
+        run: composer validate --strict
+
+      - name: Check code style
+        run: |
+          if [ -f "vendor/bin/pint" ]; then
+            vendor/bin/pint --test
+          else
+            echo "Pint not installed, skipping code style check"
+          fi
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build assets
+        run: npm run build
