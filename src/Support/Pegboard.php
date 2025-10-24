@@ -44,7 +44,7 @@ class Pegboard
         $component = Livewire::current();
 
         if ($component) {
-            $component->dispatch($event, ...(array) $data);
+            $component->dispatch($event, [$data]);
         } else {
             $flashed = session()->get($event, []);
             $flashed[] = $data;

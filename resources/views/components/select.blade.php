@@ -75,7 +75,7 @@
             $baseClasses,
             $variantClasses,
             $sizeClasses,
-            'opacity-50 cursor-not-allowed' => $disabled,
+            'opacity-disabled cursor-not-allowed' => $disabled,
         ]) }}
         :class="{ 'ring-2 ring-ring': open }"
         @if($disabled) disabled @endif

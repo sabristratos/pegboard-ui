@@ -1,5 +1,7 @@
 @php
-    $inputId = $attributes->get('id', 'input-' . uniqid());
+    $wireModelAttr = collect($attributes->getAttributes())->keys()->first(fn($key) => str_starts_with($key, 'wire:model'));
+    $wireModelValue = $wireModelAttr ? $attributes->get($wireModelAttr) : null;
+    $inputId = $attributes->get('id', $wireModelValue ? 'input-' . str_replace('.', '-', $wireModelValue) : 'input-' . uniqid());
 
     $baseClasses = 'relative shadow-xs inline-flex items-center w-full rounded-md border transition-all duration-fast focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2';
 
@@ -35,13 +37,10 @@
         default => 'mini',
     };
 
-    $inputAttributes = $attributes->except(['class', 'clearable', 'showPassword', 'copy', 'viewInNewPage'])->merge([
-        'id' => $inputId,
-    ]);
+    $inputAttributes = $attributes->except(['class', 'clearable', 'showPassword', 'copy', 'viewInNewPage']);
 @endphp
 
 <div
-    wire:ignore.self
     x-data="pegboardInput({
         clearable: {{ $clearable ? 'true' : 'false' }},
         showPassword: {{ $showPassword ? 'true' : 'false' }},
@@ -54,7 +53,7 @@
         $baseClasses,
         $variantClasses,
         $sizeClasses,
-        'opacity-50 cursor-not-allowed' => $disabled,
+        'opacity-disabled cursor-not-allowed' => $disabled,
     ]) }}
 >
     @if($icon)
@@ -71,7 +70,9 @@
 
     <input
         {{ $inputAttributes }}
+        id="{{ $inputId }}"
         :type="inputType"
+        wire:key="{{ $inputId }}"
         class="flex-1 min-w-0 {{ $inputSizeClasses }} bg-transparent border-0 outline-none focus:outline-none focus:ring-0 text-foreground placeholder:text-muted-foreground disabled:cursor-not-allowed [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
         x-ref="input"
         @if($disabled) disabled @endif
@@ -96,7 +97,7 @@
             <button
                 type="button"
                 @click="clear"
-                x-show="$refs.input.value"
+                x-show="inputValue"
                 x-cloak
                 class="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-fast"
                 aria-label="Clear input"
@@ -132,10 +133,10 @@
 
         @if($viewInNewPage)
             <a
-                :href="$refs.input.value"
+                :href="$refs.input?.value"
                 target="_blank"
                 rel="noopener noreferrer"
-                x-show="$refs.input.value && isValidUrl()"
+                x-show="$refs.input?.value && isValidUrl()"
                 x-cloak
                 class="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-fast"
                 aria-label="Open in new tab"

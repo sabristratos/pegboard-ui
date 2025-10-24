@@ -1,5 +1,5 @@
 @php
-    $baseClasses = 'relative inline-flex items-center justify-center overflow-hidden select-none';
+    $baseClasses = 'relative shrink-0 inline-flex items-center justify-center overflow-hidden select-none';
 
     $sizeClasses = match($size) {
         'xs' => 'h-6 w-6 text-xs',

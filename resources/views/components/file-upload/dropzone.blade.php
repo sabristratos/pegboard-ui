@@ -21,7 +21,7 @@
     :class="{
         'border-primary bg-primary/5 scale-[1.02]': isDragging && !isInvalidType,
         'border-warning bg-warning/5 cursor-not-allowed': isInvalidType,
-        'pointer-events-none opacity-50 animate-pulse': isLoading,
+        'pointer-events-none opacity-disabled animate-pulse': isLoading,
         'border-destructive bg-destructive/5': hasError
     }"
 >

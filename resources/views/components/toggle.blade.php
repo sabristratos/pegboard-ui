@@ -1,4 +1,10 @@
 @php
+    // Smart name handling - only show name if explicitly set, not from wire:model
+    $showName = isset($name);
+    if (!isset($name)) {
+        $name = $attributes->whereStartsWith('wire:model')->first();
+    }
+
     $baseClasses = 'relative rounded-full transition-colors duration-fast';
 
     $sizeClasses = match($size) {
@@ -11,7 +17,7 @@
     $bgClasses = 'bg-muted';
     $checkedClasses = 'peer-checked:bg-primary';
     $focusClasses = 'peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2';
-    $disabledClasses = 'peer-disabled:opacity-50 peer-disabled:cursor-not-allowed';
+    $disabledClasses = 'peer-disabled:opacity-disabled peer-disabled:cursor-not-allowed';
 
     $afterBase = "after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:rounded-full after:transition-transform after:duration-fast peer-checked:after:bg-primary-foreground";
 
@@ -23,12 +29,10 @@
         type="checkbox"
         @if($checked) checked @endif
         @if($disabled) disabled @endif
-        {{ $attributes->only(['name', 'value', 'wire:model', 'wire:model.live', 'wire:model.defer', 'wire:model.lazy', 'id']) }}
-        class="sr-only peer"
+        @if($showName) name="{{ $name }}" @endif
+        {{ $attributes }}
+        class="peer opacity-0 h-0 w-0 pointer-events-none"
     />
 
-    <div
-        {{ $attributes->except(['name', 'value', 'wire:model', 'wire:model.live', 'wire:model.defer', 'wire:model.lazy', 'id'])->merge(['class' => $allClasses]) }}
-        aria-hidden="true"
-    ></div>
+    <div class="{{ $allClasses }}" aria-hidden="true"></div>
 </label>

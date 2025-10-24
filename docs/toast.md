@@ -126,6 +126,9 @@ Pegboard.toast({
 
 ```php
 // In your Livewire component
+$this->dispatch('pegboard:toast', 'text', 'User created successfully', 'variant', 'success');
+
+// OR using array syntax (wraps data in single array)
 $this->dispatch('pegboard:toast', [
     'text' => 'User created successfully',
     'variant' => 'success',
@@ -765,6 +768,59 @@ Pegboard.toast({
 - Helpful for testing toast behavior
 - Don't rely on it for critical user flows
 
+## Common Pitfalls
+
+### ❌ Double Brackets in Livewire Dispatch
+
+**The Problem:**
+
+```php
+// ❌ WRONG - Double brackets cause empty toasts
+$this->dispatch('pegboard:toast', [[
+    'text' => 'User created successfully',
+    'variant' => 'success',
+]]);
+```
+
+**Why it fails:**
+- Livewire's `dispatch()` already wraps parameters in an array
+- Using `[[ ]]` creates a nested array structure
+- The toast component receives `undefined` values
+- Result: Empty toast with no text or heading
+
+**The Solution:**
+
+```php
+// ✅ CORRECT - Single brackets
+$this->dispatch('pegboard:toast', [
+    'text' => 'User created successfully',
+    'variant' => 'success',
+]);
+```
+
+**How the data flows:**
+
+```php
+// Your code:
+$this->dispatch('pegboard:toast', ['text' => 'Hello']);
+
+// Livewire internally wraps it:
+params = [['text' => 'Hello']]
+
+// Toast component expects:
+params[0] = ['text' => 'Hello']  ✅
+
+// With double brackets your code:
+$this->dispatch('pegboard:toast', [['text' => 'Hello']]);
+
+// Livewire wraps it again:
+params = [[['text' => 'Hello']]]
+
+// Toast component gets:
+params[0][0] = ['text' => 'Hello']
+params[0] = [['text' => 'Hello']]  ❌ Wrong structure!
+```
+
 ## API Reference
 
 ### JavaScript API
@@ -867,13 +923,15 @@ const maxToasts = Alpine.store('toasts').maxToasts;
 
 ### Livewire Integration
 
+> **⚠️ Common Mistake**: Do NOT use double brackets `[[ ]]` when dispatching toast events. Use single brackets `[ ]` only.
+
 **Dispatch from Livewire component:**
 
 ```php
 // Simple text toast
-$this->dispatch('pegboard:toast', ['text' => 'Changes saved']);
+$this->dispatch('pegboard:toast', 'text', 'Changes saved');
 
-// Toast with options
+// Toast with options (using array - single brackets!)
 $this->dispatch('pegboard:toast', [
     'text' => 'User created successfully',
     'heading' => 'Success',

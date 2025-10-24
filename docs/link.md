@@ -1,6 +1,6 @@
 # Link Component
 
-An accessible, interactive link component with semantic variants, auto-detection of external links, and proper keyboard navigation support.
+An accessible, interactive link component with semantic variants, optional external link behavior, and proper keyboard navigation support.
 
 ## Table of Contents
 
@@ -23,8 +23,8 @@ The Pegboard Link component provides consistent, accessible navigation with auto
 - 3 semantic variants (default, muted, primary)
 - 3 underline options (always, hover, none)
 - 3 size variants (sm, base, lg)
-- Auto-detection of external links
-- External link icon indicator
+- Optional external link behavior
+- External link icon indicator (when enabled)
 - Proper focus states
 - Smooth color transitions
 - Dark mode support
@@ -44,11 +44,11 @@ The Pegboard Link component provides consistent, accessible navigation with auto
 ### External Link
 
 ```blade
-{{-- Auto-detected as external --}}
-<x-pegboard::link href="https://github.com">
+{{-- Explicitly mark as external --}}
+<x-pegboard::link href="https://github.com" :external="true">
     GitHub
 </x-pegboard::link>
-{{-- Automatically adds target="_blank" and external icon --}}
+{{-- Adds target="_blank" and external icon --}}
 ```
 
 ### Styled Link
@@ -68,7 +68,7 @@ The Pegboard Link component provides consistent, accessible navigation with auto
 | `variant` | string | `'default'` | Style variant: `default`, `muted`, `primary` |
 | `underline` | string | `'always'` | Underline style: `always`, `hover`, `none` |
 | `size` | string | `'base'` | Text size: `sm`, `base`, `lg` |
-| `external` | bool\|null | auto | Force external link behavior (auto-detected by default) |
+| `external` | bool | `false` | Enable external link behavior (new tab, icon) |
 | `class` | string | - | Additional Tailwind classes |
 
 ## Variants
@@ -249,75 +249,64 @@ Prominent links for emphasis:
 
 ## External Links
 
-### Auto-Detection
+### Default Behavior
 
-External links are automatically detected:
+By default, all links open in the same tab:
 
 ```blade
-{{-- Detected as external (https://) --}}
+{{-- Opens in same tab (default) --}}
 <x-pegboard::link href="https://example.com">
     Example Site
 </x-pegboard::link>
 
-{{-- Detected as external (http://) --}}
-<x-pegboard::link href="http://oldsite.com">
-    Old Site
-</x-pegboard::link>
-
-{{-- NOT external (relative path) --}}
+{{-- Also opens in same tab --}}
 <x-pegboard::link href="/internal/page">
     Internal Page
 </x-pegboard::link>
 ```
 
-**Auto-detection triggers when URL starts with:**
-- `http://`
-- `https://`
-- `//`
+### Enabling External Link Behavior
 
-### External Link Behavior
+To open a link in a new tab with an external icon, set `:external="true"`:
 
-External links automatically receive:
+```blade
+{{-- Opens in new tab with icon --}}
+<x-pegboard::link href="https://github.com" :external="true">
+    GitHub
+</x-pegboard::link>
+```
+
+When `external` is enabled, the link receives:
 
 1. **`target="_blank"`** - Opens in new tab
 2. **`rel="noopener noreferrer"`** - Security attributes
 3. **External icon** - Small arrow indicator
 
-```blade
-{{-- Renders with all external link features --}}
-<x-pegboard::link href="https://github.com">
-    GitHub
-</x-pegboard::link>
-
-{{-- Output includes:
-     - target="_blank"
-     - rel="noopener noreferrer"
-     - Small external link icon
---}}
-```
-
-### Force External Behavior
-
-Override auto-detection manually:
+### Use Cases
 
 ```blade
-{{-- Force external behavior on internal link --}}
-<x-pegboard::link href="/docs" :external="true">
-    Documentation (opens in new tab)
+{{-- Internal links - same tab (default) --}}
+<x-pegboard::link href="/docs">
+    Documentation
 </x-pegboard::link>
 
-{{-- Force internal behavior on external link --}}
-<x-pegboard::link href="https://example.com" :external="false">
-    Example (same tab, no icon)
+{{-- External links - new tab when desired --}}
+<x-pegboard::link href="https://github.com/pegboard" :external="true">
+    View source code
+</x-pegboard::link>
+
+{{-- External links can also open in same tab --}}
+<x-pegboard::link href="https://partner-site.com">
+    Partner Site (same tab)
 </x-pegboard::link>
 ```
 
 ### External Icon
 
-External links display a small icon automatically:
+When `:external="true"` is set, an icon appears automatically:
 
 ```blade
-<x-pegboard::link href="https://github.com/pegboard">
+<x-pegboard::link href="https://github.com/pegboard" :external="true">
     Visit our GitHub
     {{-- Icon automatically appears after text --}}
 </x-pegboard::link>
@@ -336,7 +325,7 @@ External links display a small icon automatically:
 ```blade
 <x-pegboard::text variant="default">
     Welcome to Pegboard UI! Check out our
-    <x-pegboard::link href="https://github.com/pegboard" variant="primary">
+    <x-pegboard::link href="https://github.com/pegboard" variant="primary" :external="true">
         documentation on GitHub
     </x-pegboard::link>
     to get started, or visit the
@@ -380,10 +369,10 @@ External links display a small icon automatically:
         <x-pegboard::link href="/terms" variant="muted" size="sm">
             Terms of Service
         </x-pegboard::link>
-        <x-pegboard::link href="https://twitter.com/pegboard" variant="muted" size="sm">
+        <x-pegboard::link href="https://twitter.com/pegboard" variant="muted" size="sm" :external="true">
             Twitter
         </x-pegboard::link>
-        <x-pegboard::link href="https://github.com/pegboard" variant="muted" size="sm">
+        <x-pegboard::link href="https://github.com/pegboard" variant="muted" size="sm" :external="true">
             GitHub
         </x-pegboard::link>
     </div>
@@ -406,7 +395,7 @@ External links display a small icon automatically:
 
     <br />
 
-    <x-pegboard::link href="https://docs.pegboard.dev" variant="primary">
+    <x-pegboard::link href="https://docs.pegboard.dev" variant="primary" :external="true">
         Read the Documentation
     </x-pegboard::link>
 </div>
@@ -458,7 +447,7 @@ External links display a small icon automatically:
         <x-pegboard::text variant="strong" class="block">
             Documentation
         </x-pegboard::text>
-        <x-pegboard::link href="https://docs.pegboard.dev" variant="primary">
+        <x-pegboard::link href="https://docs.pegboard.dev" variant="primary" :external="true">
             Read the full documentation
         </x-pegboard::link>
     </div>
@@ -467,7 +456,7 @@ External links display a small icon automatically:
         <x-pegboard::text variant="strong" class="block">
             GitHub Repository
         </x-pegboard::text>
-        <x-pegboard::link href="https://github.com/pegboard/pegboard-ui" variant="primary">
+        <x-pegboard::link href="https://github.com/pegboard/pegboard-ui" variant="primary" :external="true">
             View source code
         </x-pegboard::link>
     </div>
@@ -476,7 +465,7 @@ External links display a small icon automatically:
         <x-pegboard::text variant="strong" class="block">
             Community
         </x-pegboard::text>
-        <x-pegboard::link href="https://discord.gg/pegboard" variant="primary">
+        <x-pegboard::link href="https://discord.gg/pegboard" variant="primary" :external="true">
             Join our Discord
         </x-pegboard::link>
     </div>
@@ -636,20 +625,23 @@ External links display a small icon automatically:
 </footer>
 ```
 
-### 6. External Links for Third-Party Sites
+### 6. Consider External Behavior for Third-Party Sites
 
 ```blade
-{{-- ✅ Good - External links open in new tab --}}
-<x-pegboard::link href="https://github.com">
+{{-- ✅ Good - External site opens in new tab --}}
+<x-pegboard::link href="https://github.com" :external="true">
     GitHub
-    {{-- Auto-adds target="_blank" and icon --}}
 </x-pegboard::link>
 
-{{-- ❌ Bad - External link opens in same tab --}}
-<x-pegboard::link href="https://github.com" :external="false">
-    GitHub
-    {{-- User loses your site --}}
+{{-- ✅ Also valid - Partner site opens in same tab --}}
+<x-pegboard::link href="https://partner-site.com">
+    Partner Site
 </x-pegboard::link>
+
+{{-- Decision based on use case:
+     - New tab: Documentation, social media, references
+     - Same tab: Partner sites, payment flows, integrated experiences
+--}}
 ```
 
 ## Accessibility
@@ -692,10 +684,10 @@ All combinations maintain 4.5:1 minimum contrast ratio.
 
 ### External Link Security
 
-External links include security attributes:
+When `:external="true"`, links include security attributes:
 
 ```blade
-<x-pegboard::link href="https://example.com">
+<x-pegboard::link href="https://example.com" :external="true">
     External Site
 </x-pegboard::link>
 {{-- Renders with: target="_blank" rel="noopener noreferrer" --}}
@@ -707,10 +699,10 @@ External links include security attributes:
 
 ### External Link Icon
 
-External link icon provides visual indication:
+When enabled, the external icon provides visual indication:
 
 ```blade
-<x-pegboard::link href="https://docs.example.com">
+<x-pegboard::link href="https://docs.example.com" :external="true">
     Documentation
     {{-- Icon indicates link opens in new tab --}}
 </x-pegboard::link>

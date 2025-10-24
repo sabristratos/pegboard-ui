@@ -23,6 +23,13 @@ export function modal(Alpine: Alpine): void {
 
                 if (this.dismissible) {
                     dialog.addEventListener('click', (event: MouseEvent) => {
+                        // Ignore synthetic/programmatic clicks (e.g., input.click())
+                        // These have coordinates of (0, 0) and shouldn't trigger dismissal
+                        if (event.clientX === 0 && event.clientY === 0) {
+                            return;
+                        }
+
+                        // Check if click is outside dialog bounds (backdrop click)
                         const rect = dialog.getBoundingClientRect();
                         const isInDialog = (
                             rect.top <= event.clientY &&

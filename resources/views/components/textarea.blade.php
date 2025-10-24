@@ -25,7 +25,7 @@
             $variantClasses,
             $sizeClasses,
             'text-foreground placeholder:text-muted-foreground',
-            'opacity-50 cursor-not-allowed' => $disabled,
+            'opacity-disabled cursor-not-allowed' => $disabled,
         ]) }}
         @if($disabled) disabled @endif
     >{{ $slot }}</textarea>

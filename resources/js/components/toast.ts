@@ -24,7 +24,7 @@ export function toast(Alpine: Alpine): void {
                 createdAt: Date.now(),
                 paused: false,
                 remainingDuration: duration,
-                action: options.action || { label: '', onClick: () => {} },
+                action: options.action || null,
             };
 
             this.items.unshift(toast);
@@ -114,13 +114,17 @@ export function toast(Alpine: Alpine): void {
 
         init() {
             if (typeof (window as any).Livewire !== 'undefined') {
-                (window as any).Livewire.on('pegboard:toast', (data: ToastOptions) => {
+                (window as any).Livewire.on('pegboard:toast', (...params: any[]) => {
+                    // Livewire wraps the data in an array, so unwrap it
+                    const data = params[0]?.[0] || params[0];
                     (Alpine.store('toasts') as any).add(data);
                 });
             }
 
             window.addEventListener('pegboard:toast', ((event: CustomEvent<ToastOptions>) => {
-                (Alpine.store('toasts') as any).add(event.detail);
+                // Browser events may also be wrapped, unwrap if needed
+                const data = Array.isArray(event.detail) ? event.detail[0] : event.detail;
+                (Alpine.store('toasts') as any).add(data);
             }) as EventListener);
 
             this.$watch('$store.toasts.items', () => {

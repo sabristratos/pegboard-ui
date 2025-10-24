@@ -1,10 +1,10 @@
 @php
-    $baseClasses = 'flex items-center gap-2 w-full px-3 py-2 text-sm rounded cursor-pointer transition-colors duration-fast outline-none';
+    $baseClasses = 'flex items-center gap-3 w-full px-3 py-2 text-sm rounded-md cursor-pointer transition-colors duration-fast outline-none';
     $variantClasses = [
         'default' => 'text-foreground hover:bg-popover-hover hover:text-popover-hover-foreground data-[active]:bg-popover-hover data-[active]:text-popover-hover-foreground active:bg-popover-hover/90',
-        'danger' => 'text-destructive hover:bg-destructive/10 hover:text-destructive data-[active]:bg-destructive/10 data-[active]:text-destructive active:bg-destructive/20',
+        'destructive' => 'text-destructive hover:bg-destructive/10 hover:text-destructive data-[active]:bg-destructive/10 data-[active]:text-destructive active:bg-destructive/20',
     ];
-    $disabledClasses = 'opacity-50 cursor-not-allowed pointer-events-none';
+    $disabledClasses = 'opacity-disabled cursor-not-allowed pointer-events-none';
 @endphp
 
 <button

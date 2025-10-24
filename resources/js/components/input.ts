@@ -6,6 +6,7 @@ export function input(Alpine: Alpine): void {
         inputType: 'text',
         passwordVisible: false,
         copied: false,
+        inputValue: '',
         clearable: options.clearable ?? false,
         showPassword: options.showPassword ?? false,
         copy: options.copy ?? false,
@@ -15,6 +16,58 @@ export function input(Alpine: Alpine): void {
             const input = this.$refs?.input as HTMLInputElement;
             if (input) {
                 this.inputType = input.type || 'text';
+                this.inputValue = input.value || '';
+
+                input.addEventListener('input', () => {
+                    this.inputValue = input.value;
+                });
+
+                (window as any).Livewire?.hook('morph.updated', ({ el, component }: any) => {
+                    if (el === input || el.contains(input)) {
+                        this.inputValue = input.value;
+                    }
+                });
+
+                const hasLiveWireModel = Array.from(input.attributes).some(
+                    attr => attr.name.startsWith('wire:model') && attr.name.includes('.live')
+                );
+
+                if (hasLiveWireModel) {
+                    const wireModelAttr = Array.from(input.attributes).find(
+                        attr => attr.name.startsWith('wire:model')
+                    );
+
+                    console.log('[Pegboard Input] Component initialized', {
+                        inputId: input.id,
+                        wireModel: wireModelAttr?.name,
+                        wireModelValue: wireModelAttr?.value,
+                        wireKey: input.getAttribute('wire:key'),
+                    });
+
+                    input.addEventListener('focus', () => {
+                        console.log('[Pegboard Input] Focus gained', {
+                            inputId: input.id,
+                            value: input.value,
+                            cursorPosition: input.selectionStart,
+                        });
+                    });
+
+                    input.addEventListener('blur', () => {
+                        console.log('[Pegboard Input] Focus lost', {
+                            inputId: input.id,
+                            value: input.value,
+                            activeElement: document.activeElement?.tagName,
+                        });
+                    });
+
+                    input.addEventListener('input', () => {
+                        console.log('[Pegboard Input] Input changed', {
+                            inputId: input.id,
+                            value: input.value,
+                            cursorPosition: input.selectionStart,
+                        });
+                    });
+                }
             }
         },
 
@@ -22,7 +75,9 @@ export function input(Alpine: Alpine): void {
             const input = this.$refs?.input as HTMLInputElement;
             if (input) {
                 input.value = '';
-                input.dispatchEvent(new Event('input', { bubbles: true }));
+                this.inputValue = '';
+                input.dispatchEvent(new Event('input', { bubbles: false }));
+                input.dispatchEvent(new Event('change', { bubbles: false }));
                 input.focus();
             }
         },

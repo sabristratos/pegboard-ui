@@ -52,7 +52,7 @@ $wrapperClasses = $attributes->get('class', '');
             @keydown.escape="closePopover"
             data-pegboard-control
             {{ $disabled ? 'disabled' : '' }}
-            class="w-full rounded-lg border {{ $variantClasses }} {{ $sizeClasses }} transition-colors duration-fast placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:border-transparent {{ $disabled ? 'opacity-60 cursor-not-allowed' : '' }}"
+            class="w-full rounded-lg border {{ $variantClasses }} {{ $sizeClasses }} transition-colors duration-fast placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:border-transparent {{ $disabled ? 'opacity-disabled cursor-not-allowed' : '' }}"
         />
 
         <div class="absolute {{ $iconPosition }} top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -63,7 +63,7 @@ $wrapperClasses = $attributes->get('class', '');
                     x-show="$refs.input.value"
                     x-cloak
                     {{ $disabled ? 'disabled' : '' }}
-                    class="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-fast {{ $disabled ? 'opacity-60 cursor-not-allowed' : '' }}"
+                    class="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-fast {{ $disabled ? 'opacity-disabled cursor-not-allowed' : '' }}"
                     aria-label="Clear"
                 >
                     <x-pegboard::icon name="x-mark" variant="micro" :class="$iconSize" />
@@ -75,7 +75,7 @@ $wrapperClasses = $attributes->get('class', '');
                 @click="togglePopover"
                 tabindex="-1"
                 {{ $disabled ? 'disabled' : '' }}
-                class="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-fast {{ $disabled ? 'opacity-60 cursor-not-allowed' : '' }}"
+                class="flex items-center text-muted-foreground hover:text-foreground transition-colors duration-fast {{ $disabled ? 'opacity-disabled cursor-not-allowed' : '' }}"
             >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="{{ $iconSize }}">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />

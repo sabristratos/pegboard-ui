@@ -22,6 +22,13 @@ All notable changes to `Pegboard` will be documented in this file.
 ### Security
 - Nothing yet
 
+## [0.1.2] - 2025-10-24
+
+### Fixed
+- Include built assets (`dist/`) in Composer distribution to fix 500 error when loading JavaScript
+- Assets are now committed to repository instead of being gitignored
+- Source maps (`.map` files) excluded from distribution via `.gitattributes`
+
 ## [0.1.1] - 2025-10-24
 
 ### Fixed
