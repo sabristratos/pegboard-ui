@@ -19,111 +19,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Load Alpine.js
+    | Visual Customization
     |--------------------------------------------------------------------------
     |
-    | Determine whether Pegboard should automatically load Alpine.js.
-    | Set this to false if you're already loading Alpine.js in your project.
+    | Pegboard follows a CSS-first design philosophy. All visual customization
+    | (colors, spacing, typography, transitions, etc.) is done by overriding
+    | CSS custom properties defined in resources/css/pegboard.css.
+    |
+    | To customize the appearance:
+    | 1. Import pegboard.css in your main CSS file
+    | 2. Override any custom property (e.g., --color-primary, --brand-500, etc.)
+    | 3. Use Tailwind utilities on components for one-off styling
+    |
+    | Example:
+    | @import 'path/to/pegboard.css';
+    |
+    | @theme {
+    |   --brand-500: var(--color-purple-500);  // Change brand color
+    |   --duration-fast: 100ms;                // Speed up animations
+    | }
     |
     */
-
-    'load_alpinejs' => true,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Asset Path
-    |--------------------------------------------------------------------------
-    |
-    | The path where Pegboard assets are published. This is relative to
-    | the public directory. Change this if you need a different location.
-    |
-    */
-
-    'asset_path' => 'vendor/pegboard',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Theme Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Configure default theme settings for Pegboard components.
-    | These values can be overridden on a per-component basis.
-    |
-    */
-
-    'theme' => [
-        'colors' => [
-            'primary' => 'blue',
-            'secondary' => 'gray',
-            'success' => 'green',
-            'danger' => 'red',
-            'warning' => 'yellow',
-            'info' => 'cyan',
-        ],
-    ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Development Mode
-    |--------------------------------------------------------------------------
-    |
-    | When enabled, Pegboard will use unminified assets and provide
-    | additional debugging information. This should be disabled in production.
-    |
-    */
-
-    'dev_mode' => env('APP_DEBUG', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Icon Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Configure how Pegboard handles icons, including custom icon sets,
-    | fallback behavior, and resolution order.
-    |
-    */
-
-    'icons' => [
-        /*
-        | Custom Icons Path
-        | Path relative to resources/ where custom SVG icons are stored.
-        | Publish with: php artisan vendor:publish --tag=pegboard-icons
-        */
-        'custom_path' => 'icons',
-
-        /*
-        | Fallback Icon
-        | Icon name to use when requested icon cannot be found in any set.
-        | Uses Heroicon naming (without prefix). Set to null to disable.
-        */
-        'fallback' => 'question-mark-circle',
-
-        /*
-        | Default Variant
-        | Default Heroicon variant when none specified.
-        | Options: outline, solid, mini, micro
-        */
-        'default_variant' => 'outline',
-
-        /*
-        | Resolution Order
-        | Order in which icon sets are searched when no explicit set specified.
-        | First match wins. Options: heroicon, custom
-        */
-        'resolution_order' => ['heroicon', 'custom'],
-
-        /*
-        | Size Presets
-        | Predefined size classes that can be used via size="xs|sm|md|lg|xl"
-        */
-        'sizes' => [
-            'xs' => 'h-3 w-3',
-            'sm' => 'h-4 w-4',
-            'md' => 'h-5 w-5',
-            'lg' => 'h-6 w-6',
-            'xl' => 'h-8 w-8',
-        ],
-    ],
 
 ];

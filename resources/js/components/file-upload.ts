@@ -22,11 +22,12 @@ export function fileUpload(Alpine: Alpine): void {
         selectedFiles: [] as SelectedFileMetadata[],
 
         init() {
+            this.selectedFiles = [];
+
             this.$nextTick?.(() => {
                 const input = this.$refs?.input as HTMLInputElement;
 
                 if (!input) {
-                    console.error('[Pegboard FileUpload] Input element not found!');
                     return;
                 }
 
@@ -85,9 +86,7 @@ export function fileUpload(Alpine: Alpine): void {
                     event: LIVEWIRE_EVENTS.UPLOAD_ERROR,
                     handler: (event: Event) => {
                         const customEvent = event as CustomEvent;
-                        console.error('[Pegboard FileUpload] Livewire upload-error event received', customEvent.detail);
                         if (customEvent.detail.name === modelName) {
-                            console.error('[Pegboard FileUpload] Upload failed!');
                             this.isLoading = false;
                             this.progress = 0;
                             this.hasError = true;
@@ -175,7 +174,6 @@ export function fileUpload(Alpine: Alpine): void {
                     try {
                         metadata.previewUrl = URL.createObjectURL(file);
                     } catch (error) {
-                        console.error('[Pegboard FileUpload] Failed to create preview URL for:', file.name, error);
                     }
                 }
 
@@ -188,7 +186,6 @@ export function fileUpload(Alpine: Alpine): void {
         removeFile(index: number) {
             const input = this.$refs?.input as HTMLInputElement;
             if (!input || !input.files) {
-                console.error('[Pegboard FileUpload] Cannot remove file - input element not found');
                 return;
             }
 
@@ -242,7 +239,17 @@ export function fileUpload(Alpine: Alpine): void {
         onChange() {
             const input = this.$refs?.input as HTMLInputElement;
 
-            if (!input || !input.files || input.files.length === 0) {
+            if (!input || !input.files) {
+                return;
+            }
+
+            if (input.files.length === 0) {
+                this.selectedFiles.forEach(file => {
+                    if (file.previewUrl) {
+                        URL.revokeObjectURL(file.previewUrl);
+                    }
+                });
+                this.selectedFiles = [];
                 return;
             }
 
@@ -289,7 +296,6 @@ export function fileUpload(Alpine: Alpine): void {
             const input = this.$refs?.input as HTMLInputElement;
 
             if (!input || !event.dataTransfer?.files) {
-                console.warn('[Pegboard FileUpload] Drop event but no input or files found');
                 return;
             }
 

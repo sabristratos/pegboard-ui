@@ -23,27 +23,45 @@
         };
     }
 
-    $colorMap = [
-        'primary' => ['base' => 'primary', 'fg' => 'primary-foreground'],
-        'secondary' => ['base' => 'secondary', 'fg' => 'secondary-foreground'],
-        'success' => ['base' => 'success', 'fg' => 'success-foreground'],
-        'warning' => ['base' => 'warning', 'fg' => 'warning-foreground'],
-        'danger' => ['base' => 'destructive', 'fg' => 'destructive-foreground'],
-        'default' => ['base' => 'muted', 'fg' => 'muted-foreground'],
-    ];
+    // Use complete static class strings for Tailwind JIT compiler
+    $colorClasses = match("{$variant}-{$color}") {
+        // Solid variants
+        'solid-primary' => 'bg-primary text-primary-foreground',
+        'solid-secondary' => 'bg-secondary text-secondary-foreground',
+        'solid-success' => 'bg-success text-success-foreground',
+        'solid-warning' => 'bg-warning text-warning-foreground',
+        'solid-danger' => 'bg-destructive text-destructive-foreground',
+        'solid-info' => 'bg-info text-info-foreground',
+        'solid-default' => 'bg-muted text-muted-foreground',
 
-    $c = $colorMap[$color] ?? $colorMap['default'];
+        // Flat variants
+        'flat-primary' => 'bg-primary/10 text-primary',
+        'flat-secondary' => 'bg-accent/50 text-accent-foreground',
+        'flat-success' => 'bg-success/10 text-success',
+        'flat-warning' => 'bg-warning/10 text-warning',
+        'flat-danger' => 'bg-destructive/10 text-destructive',
+        'flat-info' => 'bg-info/10 text-info',
+        'flat-default' => 'bg-muted/30 text-foreground',
 
-    [$bgClass, $textClass] = match($variant) {
-        'solid' => ["bg-{$c['base']}", "text-{$c['fg']}"],
-        'flat' => $color === 'default'
-            ? ['bg-muted/30', 'text-foreground']
-            : ["bg-{$c['base']}/10", "text-{$c['base']}"],
-        'faded' => $color === 'default'
-            ? ['bg-muted/20', 'text-foreground']
-            : ["bg-{$c['base']}/5", "text-{$c['base']}"],
-        'shadow' => ["bg-{$c['base']}", "text-{$c['fg']}"],
-        default => ['bg-muted', 'text-muted-foreground'],
+        // Faded variants
+        'faded-primary' => 'bg-primary/5 text-primary border-primary/20',
+        'faded-secondary' => 'bg-secondary/5 text-secondary border-secondary/20',
+        'faded-success' => 'bg-success/5 text-success border-success/20',
+        'faded-warning' => 'bg-warning/5 text-warning border-warning/20',
+        'faded-danger' => 'bg-destructive/5 text-destructive border-destructive/20',
+        'faded-info' => 'bg-info/5 text-info border-info/20',
+        'faded-default' => 'bg-muted/20 text-foreground border-border',
+
+        // Shadow variants
+        'shadow-primary' => 'bg-primary text-primary-foreground shadow-md',
+        'shadow-secondary' => 'bg-secondary text-secondary-foreground shadow-md',
+        'shadow-success' => 'bg-success text-success-foreground shadow-md',
+        'shadow-warning' => 'bg-warning text-warning-foreground shadow-md',
+        'shadow-danger' => 'bg-destructive text-destructive-foreground shadow-md',
+        'shadow-info' => 'bg-info text-info-foreground shadow-md',
+        'shadow-default' => 'bg-muted text-muted-foreground shadow-md',
+
+        default => 'bg-muted text-muted-foreground',
     };
 
     $iconSize = match($size) {
@@ -70,12 +88,9 @@
                 'inline-flex items-center justify-center font-medium whitespace-nowrap transition-all duration-fast gap-1',
                 $sizeClasses,
                 $shapeClasses,
-                $bgClass,
-                $textClass,
+                $colorClasses,
                 $placementClasses,
                 'border' => $variant === 'faded',
-                "border-{$c['base']}/20" => $variant === 'faded',
-                'shadow-md' => $variant === 'shadow',
                 'ring-2' => $showOutline && !$isDot,
                 'ring-background' => $showOutline && !$isDot,
                 'invisible' => $isInvisible,
@@ -104,13 +119,10 @@
             'inline-flex items-center justify-center font-medium whitespace-nowrap transition-all duration-fast gap-1',
             $sizeClasses,
             $shapeClasses,
-            $bgClass,
-            $textClass,
+            $colorClasses,
             'border' => $variant === 'faded',
-            "border-{$c['base']}/20" => $variant === 'faded',
-            'shadow-md' => $variant === 'shadow',
             'ring-2' => $showOutline && !$isDot,
-            'ring-background' => $showOutline && !$isDot,
+            'ring-none' => $showOutline && !$isDot,
             'invisible' => $isInvisible,
             'opacity-0' => $isInvisible,
         ]) }}

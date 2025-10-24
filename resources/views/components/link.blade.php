@@ -23,13 +23,13 @@
 <a
     href="{{ $href }}"
     {{ $attributes->merge(['class' => "$baseClasses $variantClasses $underlineClasses $sizeClasses"]) }}
-    @if($isExternal)
+    @if($external)
         target="_blank"
         rel="noopener noreferrer"
     @endif
 >
     {{ $slot }}
-    @if($isExternal)
+    @if($external)
         <x-pegboard::icon name="arrow-top-right-on-square" variant="mini" class="h-3.5 w-3.5" />
     @endif
 </a>

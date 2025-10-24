@@ -82,7 +82,7 @@
     })"
     data-pegboard-range
     data-orientation="{{ $orientation }}"
-    {{ $containerAttributes->merge(['class' => $containerClasses . ' ' . $wrapperClasses . ($disabled ? ' opacity-50 pointer-events-none' : '')]) }}
+    {{ $containerAttributes->merge(['class' => $containerClasses . ' ' . $wrapperClasses . ($disabled ? ' opacity-disabled pointer-events-none' : '')]) }}
     role="group"
     aria-label="{{ $label ?: 'Range slider' }}"
     @if($disabled) aria-disabled="true" @endif
@@ -114,7 +114,7 @@
                 class="absolute {{ $fillColorClass }} {{ $fillerRounding }} {{ $orientation === 'vertical' ? 'w-full' : 'h-full' }} motion-reduce:transition-none"
                 data-pegboard-filler
                 :class="{
-                    'transition-[left,bottom,width,height] duration-150': isInitialized && !isDragging,
+                    'transition-[left,bottom,width,height] duration-fast': isInitialized && !isDragging,
                     'transition-none': !isInitialized || isDragging
                 }"
                 :style="fillerStyle"
@@ -144,7 +144,7 @@
                 <div
                     class="flex justify-center items-center before:absolute before:w-11 before:h-11 before:rounded-full after:shadow-sm after:bg-card {{ $thumbSize }} rounded-full after:rounded-full {{ $colorClasses }} {{ $orientation === 'vertical' ? 'left-1/2' : 'top-1/2' }} cursor-grab data-[dragging=true]:cursor-grabbing border-2 shadow-sm {{ $hideThumb ? 'opacity-0' : '' }} hover:scale-105 hover:shadow-lg data-[dragging=true]:shadow-lg data-[dragging=true]:after:scale-80 after:transition-all motion-reduce:after:transition-none motion-reduce:transition-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     :class="{
-                        'transition-[left,top,transform,box-shadow] duration-150': isInitialized && !thumb.dragging,
+                        'transition-[left,top,transform,box-shadow] duration-fast': isInitialized && !thumb.dragging,
                         'transition-none': !isInitialized || thumb.dragging
                     }"
                     data-pegboard-thumb

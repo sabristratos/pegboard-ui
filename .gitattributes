@@ -15,3 +15,4 @@ tsconfig.tsbuildinfo export-ignore
 vite.config.ts export-ignore
 README.md export-ignore
 CHANGELOG.md export-ignore
+/dist/*.map export-ignore

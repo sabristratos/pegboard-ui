@@ -78,4 +78,80 @@ if (typeof window !== 'undefined' && window.Alpine) {
     window.Alpine.plugin(registerComponents);
 }
 
+// Add Livewire morph tracking for debugging focus issues
+if (typeof window !== 'undefined' && typeof (window as any).Livewire !== 'undefined') {
+    document.addEventListener('livewire:init', () => {
+        const Livewire = (window as any).Livewire;
+
+        console.log('[Pegboard] Livewire initialized, adding morph hooks');
+
+        // Track which element has focus before morphing
+        let focusedBeforeMorph: Element | null = null;
+        let cursorPositionBeforeMorph: number | null = null;
+
+        Livewire.hook('morph', ({ el, component }: any) => {
+            focusedBeforeMorph = document.activeElement;
+
+            if (focusedBeforeMorph instanceof HTMLInputElement || focusedBeforeMorph instanceof HTMLTextAreaElement) {
+                // Check all attributes since wire:model might have modifiers
+                const hasLiveWireModel = Array.from(focusedBeforeMorph.attributes).some(
+                    (attr: Attr) => attr.name.startsWith('wire:model') && attr.name.includes('.live')
+                );
+
+                // Only log for inputs with wire:model.live
+                if (hasLiveWireModel) {
+                    const wireModelAttr = Array.from(focusedBeforeMorph.attributes).find(
+                        (attr: Attr) => attr.name.startsWith('wire:model')
+                    );
+
+                    cursorPositionBeforeMorph = focusedBeforeMorph.selectionStart;
+
+                    console.log('[Pegboard] Before morph', {
+                        focusedElement: focusedBeforeMorph.tagName,
+                        inputId: focusedBeforeMorph.id,
+                        wireModel: wireModelAttr?.name,
+                        wireModelValue: wireModelAttr?.value,
+                        wireKey: focusedBeforeMorph.getAttribute('wire:key'),
+                        value: focusedBeforeMorph.value,
+                        cursorPosition: cursorPositionBeforeMorph,
+                        componentName: component?.name,
+                    });
+                }
+            }
+        });
+
+        Livewire.hook('morph.updated', ({ el, component }: any) => {
+            const focusedAfterMorph = document.activeElement;
+
+            // Only log if we were tracking a live model input
+            if (focusedBeforeMorph instanceof HTMLInputElement || focusedBeforeMorph instanceof HTMLTextAreaElement) {
+                const hasLiveWireModel = Array.from(focusedBeforeMorph.attributes).some(
+                    (attr: Attr) => attr.name.startsWith('wire:model') && attr.name.includes('.live')
+                );
+
+                if (hasLiveWireModel) {
+                    console.log('[Pegboard] After morph', {
+                        focusedBefore: focusedBeforeMorph?.tagName,
+                        focusedAfter: focusedAfterMorph?.tagName,
+                        focusPreserved: focusedBeforeMorph === focusedAfterMorph,
+                        componentName: component?.name,
+                    });
+
+                    // Check if focus was lost from an input
+                    if (focusedBeforeMorph !== focusedAfterMorph) {
+                        console.warn('[Pegboard] ⚠️ Focus was lost during morph!', {
+                            lostFrom: focusedBeforeMorph.id,
+                            movedTo: focusedAfterMorph?.tagName || 'BODY',
+                        });
+                    }
+                }
+            }
+
+            // Reset tracking
+            focusedBeforeMorph = null;
+            cursorPositionBeforeMorph = null;
+        });
+    });
+}
+
 export default registerComponents;

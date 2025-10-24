@@ -52,7 +52,7 @@
     $baseClasses = 'group relative inline-flex items-center cursor-pointer select-none transition-all duration-fast';
     $hoverClasses = $isCard ? 'hover:bg-muted/50' : '';
     $focusClasses = $isCard ? 'has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-ring has-[:focus-visible]:ring-offset-2' : '';
-    $disabledClasses = 'has-[:disabled]:opacity-50 has-[:disabled]:cursor-not-allowed';
+    $disabledClasses = 'has-[:disabled]:opacity-disabled has-[:disabled]:cursor-not-allowed';
 
     $wrapperClasses = $isCard
         ? "bg-card {$hoverClasses} justify-between rounded-lg gap-4 {$cardPadding} border-2 {$variantClasses} w-full {$focusClasses} {$disabledClasses}"

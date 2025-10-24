@@ -9,6 +9,7 @@
 @endphp
 
 <div
+    wire:ignore
     x-data="dropdown({ position: '{{ $position }}', align: '{{ $align }}', offset: {{ $offset }}, gap: {{ $gap }} })"
     @menu-close.window="if ($event.target.closest('[x-data]') === $el) close()"
     data-position="{{ $position }}"

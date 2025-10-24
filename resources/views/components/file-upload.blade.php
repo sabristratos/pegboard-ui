@@ -20,6 +20,13 @@
 
     <input
         x-ref="input"
+        x-init="Object.defineProperty($el, 'value', {
+            ...Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value'),
+            set(value) {
+                Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(this, value);
+                if(!value) this.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+        })"
         type="file"
         id="{{ $inputId }}"
         name="{{ $inputName }}"
@@ -39,7 +46,7 @@
         :data-pegboard-invalid-type="isInvalidType ? '' : undefined"
         :data-pegboard-loading="isLoading ? '' : undefined"
         :data-pegboard-error="hasError ? '' : undefined"
-        @click="openFileSelector"
+        @click.stop="openFileSelector"
         @keydown.enter.prevent="openFileSelector"
         @keydown.space.prevent="openFileSelector"
         @dragenter.prevent="onDragEnter"

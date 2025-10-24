@@ -49,7 +49,7 @@
         $realisticClasses,
         $sizeClasses,
         $variantClasses,
-        'opacity-50 cursor-not-allowed' => $loading || $disabled,
+        'opacity-disabled cursor-not-allowed' => $loading || $disabled,
     ])->merge(['type' => 'button']) }}
     @if($loading || $disabled) disabled @endif
     @if($loading) aria-busy="true" @endif

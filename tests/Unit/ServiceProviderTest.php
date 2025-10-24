@@ -25,8 +25,6 @@ class ServiceProviderTest extends TestCase
     public function test_config_has_expected_keys(): void
     {
         $this->assertArrayHasKey('prefix', config('pegboard'));
-        $this->assertArrayHasKey('load_alpinejs', config('pegboard'));
-        $this->assertArrayHasKey('asset_path', config('pegboard'));
-        $this->assertArrayHasKey('theme', config('pegboard'));
+        $this->assertEquals('pegboard', config('pegboard.prefix'));
     }
 }

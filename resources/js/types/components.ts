@@ -54,6 +54,7 @@ export interface InputState {
     inputType: string;
     passwordVisible: boolean;
     copied: boolean;
+    inputValue: string;
     clearable: boolean;
     showPassword: boolean;
     copy: boolean;
@@ -307,12 +308,17 @@ export interface ToastOptions {
     action?: ToastAction;
 }
 
-export interface ToastItem extends Required<ToastOptions> {
+export interface ToastItem {
     id: number;
+    heading: string;
+    text: string;
+    variant: ToastVariant;
+    duration: number;
     visible: boolean;
     createdAt?: number;
     paused?: boolean;
     remainingDuration?: number;
+    action: ToastAction | null;
 }
 
 export interface RatingOptions {

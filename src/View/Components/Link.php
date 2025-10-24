@@ -15,14 +15,10 @@ class Link extends Component
         public string $href,
         public string $variant = 'default',
         public string $underline = 'always',
-        public ?bool $external = null,
+        public bool $external = false,
         public string $size = 'base',
     ) {
-        $this->isExternal = $external ?? (
-            str_starts_with($href, 'http://') ||
-            str_starts_with($href, 'https://') ||
-            str_starts_with($href, '//')
-        );
+        $this->isExternal = $external;
     }
 
     public function render(): View
