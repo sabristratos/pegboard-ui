@@ -22,6 +22,14 @@ All notable changes to `Pegboard` will be documented in this file.
 ### Security
 - Nothing yet
 
+## [0.1.1] - 2025-10-24
+
+### Fixed
+- GitHub Actions CI workflows for proper Laravel 11/12 testing
+- Orchestra Testbench version compatibility (v9 for Laravel 11, v10 for Laravel 12)
+- NPM dependency installation in CI (removed cache requirement, use `npm install`)
+- Composer dependency resolution with `--with-all-dependencies` flag
+
 ## [0.1.0] - 2025-10-24
 
 ### Added
