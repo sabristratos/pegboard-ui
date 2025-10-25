@@ -59,12 +59,13 @@
         : "justify-start {$padding} rounded-md {$disabledClasses}";
 @endphp
 
-<label {{ $attributes->merge(['class' => $baseClasses . ' ' . $wrapperClasses]) }}>
+<label {{ $attributes->whereDoesntStartWith('wire:')->merge(['class' => $baseClasses . ' ' . $wrapperClasses]) }}>
     <input
         type="checkbox"
         @if($name) name="{{ $name }}" @endif
         value="{{ $value }}"
         @if($disabled) disabled @endif
+        {{ $attributes->whereStartsWith('wire:') }}
         class="peer absolute opacity-0 w-0 h-0"
     />
 

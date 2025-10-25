@@ -6772,6 +6772,18 @@ function select(Alpine) {
         this.updateFilteredOptions();
         this.activeIndex = 0;
       });
+      this.$watch?.("selectedValue", (newValue) => {
+        if (!this.multiple && newValue) {
+          const option = this.options.find((opt) => opt.value === newValue);
+          if (option) {
+            this.selectedText = option.text;
+          } else {
+            this.selectedText = "";
+          }
+        } else if (!this.multiple && !newValue) {
+          this.selectedText = "";
+        }
+      });
       this.$watch?.("open", (isOpen) => {
         const popover2 = this.$refs?.popover;
         if (!popover2) {
@@ -7757,12 +7769,6 @@ function toast(Alpine) {
     isHovered: false,
     handleEscape: null,
     init() {
-      if (typeof window.Livewire !== "undefined") {
-        window.Livewire.on("pegboard:toast", (...params) => {
-          const data = params[0]?.[0] || params[0];
-          Alpine.store("toasts").add(data);
-        });
-      }
       window.addEventListener("pegboard:toast", (event) => {
         const data = Array.isArray(event.detail) ? event.detail[0] : event.detail;
         Alpine.store("toasts").add(data);

@@ -31,7 +31,7 @@
            hover:bg-popover-hover hover:text-popover-hover-foreground
            focus:outline-none focus:bg-popover-hover focus:text-popover-hover-foreground
            data-[active=true]:bg-popover-hover data-[active=true]:text-popover-hover-foreground
-           data-[selected=true]:bg-primary/5
+           data-[selected=true]:bg-popover-hover
            active:bg-popover-hover/90
            disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent"
 >

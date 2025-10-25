@@ -87,6 +87,21 @@ export function select(Alpine: Alpine): void {
                 this.activeIndex = 0;
             });
 
+            // Watch selectedValue to update selectedText when Livewire changes the value
+            this.$watch?.('selectedValue', (newValue: string) => {
+                if (!this.multiple && newValue) {
+                    const option = this.options.find((opt: SelectOption) => opt.value === newValue);
+                    if (option) {
+                        this.selectedText = option.text;
+                    } else {
+                        // Options not registered yet - will be set when option registers
+                        this.selectedText = '';
+                    }
+                } else if (!this.multiple && !newValue) {
+                    this.selectedText = '';
+                }
+            });
+
             this.$watch?.('open', (isOpen: boolean) => {
                 const popover = this.$refs?.popover as HTMLElement;
 

@@ -44,7 +44,7 @@
     @endif
     data-pegboard-group-item
     data-icon-size="{{ $iconSize }}"
-    {{ $attributes }}
+    {{ $attributes->whereDoesntStartWith('wire:') }}
 >
     @if($name)
         @if(!$multiple)
@@ -53,7 +53,7 @@
                 name="{{ $name }}"
                 :value="selectedValue"
                 x-ref="hiddenInput"
-                {{ $attributes->whereStartsWith('wire:model') }}
+                {{ $attributes->whereStartsWith('wire:') }}
             />
         @else
             <template x-for="(val, index) in selectedValues" :key="index">

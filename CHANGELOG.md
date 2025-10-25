@@ -22,6 +22,16 @@ All notable changes to `Pegboard` will be documented in this file.
 ### Security
 - Nothing yet
 
+## [0.1.3] - 2025-10-25
+
+### Fixed
+- Select component now properly updates display text when Livewire changes the value
+- Fixed wire: attribute handling on select component for better Livewire compatibility
+- Improved checkbox and radio component attribute handling
+
+### Changed
+- Toast component code cleanup
+
 ## [0.1.2] - 2025-10-24
 
 ### Fixed
